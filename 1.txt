@@ -1,0 +1,70 @@
+VAD detect the voice:
+    send audio (from ring buffer and VAD detection start 的最开始的共1s) to ASR
+    if ASR is done:
+        send transcript to a small LLM (qwen3:14b-q4_K_M)
+        # ollama list in my computer: 
+        # NAME                  ID              SIZE      MODIFIED
+        # qwen3:14b-q4_K_M      bdbd181c33f2    9.3 GB    4 weeks ago
+        # gemma3:12b-it-q8_0    997a7c2c0975    13 GB     4 weeks ago
+        if small LLM is done:
+            if is interrupt intent:
+                interrupt(clear TTS audio queue,stop TTS,stop ongoing large LLM,...)
+            else:
+                continue
+
+    send audio (from ring buffer and VAD detection start to end) to ASR
+    if ASR is done:
+        send transcript to a small LLM (qwen3:14b-q4_K_M)
+        # ollama list in my computer: 
+        # NAME                  ID              SIZE      MODIFIED
+        # qwen3:14b-q4_K_M      bdbd181c33f2    9.3 GB    4 weeks ago
+        # gemma3:12b-it-q8_0    997a7c2c0975    13 GB     4 weeks ago
+        if small LLM is done:
+            if is interrupt intent:
+                interrupt(clear TTS audio queue,stop TTS,stop ongoing large LLM,...)
+            else:
+                continue
+
+
+## 课题六：边打电话边操作电脑的 Agent
+
+**问题描述：**
+想象一个场景：AI Agent 需要帮助用户完成一个在线预订任务，例如填写一个复杂的航班预订表单。在这个过程中，Agent 需要一边操作网页，一边通过电话向用户询问并确认个人信息（如姓名、证件号、航班偏好等）。
+
+这个任务对单个 Agent 构成了巨大挑战。因为电话沟通和电脑操作都要求较高的实时性。如果一个 Agent 在集中精力 “看” 屏幕并点击按钮时，它就无法同时听取用户的讲话并作出回应，反之亦然。这会导致通话卡顿或操作中断，体验很差。
+
+本课题的目标是构建一个由两个 Agent 协同工作的多智能体系统，来解决这个 “一心二用” 的难题。一个 Agent 负责打电话，另一个 Agent 负责操作电脑，它们之间实时通信，高效地完成任务。
+
+**核心挑战与要求：**
+
+-   **双 Agent 架构**：你需要构建两个独立的 Agent：
+    -   **电话 Agent**：负责与用户进行语音通话。你需要基于 ASR (语音识别) + LLM (大语言模型) + TTS (语音合成) 的 API 来实现它。它可以参考[课题一](#课题一：边想边说的语音聊天机器人)的实现思路。
+    -   **电脑 Agent**：负责操作电脑上的浏览器，完成网页表单填写等任务。建议基于现有的浏览器操作框架，例如 [Anthropic Computer Use](https://github.com/anthropics/anthropic-computer-use) 或 [browser-use](https://github.com/BrowserUse/browser-use) 或其他类似框架。
+-   **Agent 间协同通信**：
+    -   两个 Agent 必须能够高效地双向通信。当电话 Agent 从用户那里获取到信息（例如“我的名字是张三”）后，需要能立刻“告知”电脑 Agent。当电脑 Agent 在操作中遇到问题（例如“找不到‘下一步’按钮”）或者完成一个步骤时，也需要能“告知”电话 Agent。
+    -   这种通信可以通过工具调用（Tool-use）来实现：电话 Agent 调用一个 `send_message_to_computer_agent` 工具，电脑 Agent 调用一个 `send_message_to_phone_agent` 工具。
+-   **并行工作与实时性**：
+    -   关键在于两个 Agent 必须能并行工作。在电脑 Agent 寻找页面元素或输入文本时，电话 Agent 必须保持在线，能够与用户正常对话，例如可以说“好的，正在为您填写姓名... 请问您的证件号码是？”。
+    -   两个 Agent 的输入需要包含来自对方的信息。例如，电话 Agent 的语言模型输入不仅包含用户的语音转录，还应包含一个特殊标记的字段，内容是电脑 Agent 发来的消息（如 `[FROM_COMPUTER_AGENT] 找不到“下一步”按钮`）。同样，电脑 Agent 的多模态模型输入不仅包含浏览器截图，也应包含电话 Agent 的消息（如 `[FROM_PHONE_AGENT] 用户说姓名是张三`）。
+
+**参考资料：**
+
+-   可以参考 Google 提出的 Agent-to-Agent (A2A) 通信协议的设计思想。
+
+**验收标准：**
+
+1.  **选择一个在线表单**：选择一个公开的网站，例如一个注册页面、一个预订表单或一个联系我们页面。
+2.  **演示协同工作流程**：
+    *   启动系统后，电话 Agent 主动向用户（真人扮演）拨打电话（或开始语音对话），说明任务目标（“您好，我将帮助您填写XX表单”），并开始询问第一个必填项（例如“请问您的姓名是？”）。
+    *   用户回答后，电话 Agent 立即将信息传递给电脑 Agent。
+    *   电脑 Agent 接收到信息后，在浏览器中找到对应的输入框并填写。
+    *   在电脑 Agent 操作期间，电话 Agent 不能沉默，可以给用户反馈（“好的，已填好姓名。”），并接着询问下一个问题。
+    *   整个表单填写过程流畅，电话沟通和电脑操作无明显互相阻塞。
+3.  **异常处理演示**：
+    *   当电脑 Agent 遇到一个无法处理的情况（例如，用户提供的信息格式不正确导致网页报错），它应该将这个错误信息告知电话 Agent。
+    *   电话 Agent 接收到错误后，能够向用户转述问题并请求新的信息（例如“抱歉，您提供的邮箱格式似乎不对，可以重新说一下吗？”）。
+
+
+我想设计一个机制，是这样,你只需关注图片里的voice agent部分：
+AudioHandler 持续监听麦克风，检测语音活动，检测到语音活动的那一刻起,如果large llm 不忙，那么不用进行A,上来直接设置interrupt并且只进行B，如果large llm忙,并行执行AB。一边A是：1s后把ring buffer加上当前的1s的audio的音频数据进行stt转录输入给small llm（用我的OLLAMA里的qwen3:14b-q4_K_M) ，small llm根据转录的文本决定是否设置interrupt,如果用户在这短短的1s多说的是好的，对，是，嗯嗯，哈哈，对啊，妙啊等这种附和语或者语气词或者环境嘈杂音（实际上识别的东西又短又很奇怪或者为空），那么small llm应该设置disinterrupt；如果不止是这种附和语或者语气词或者杂音还有别的比如你现在/我觉得/有道理啊/....等，说明1s多时间比较短用户还没说完我，这个时候用户说的话肯定有用了，或者用户就没语气词，直接说有用正常的对话，应当设置Interrupt。另一边B（并发）是继续检测直到觉得用户说完，转录为text。如果设置为interrupt并且B已经结束，那么主动打断large llm。用户的voice打断large llm的时候，如果large llm本来就不忙（没在说话），那么把system prompt+large llm之前没说完的话和没来及说的话history_saying_be_interrupted+B得出的text喂给大模型即可；如果打断large llm的时候，如果large llm正忙，那么把large llm正忙的这次从它开始流式输出text到被打断的时候说的话保存到“large llm没说完的话以及没来得及说的话” history_saying_be_interrupted 里（无论AI主动还是被动都要做的事情），然后判断上次说话是主动的还是被动的（queue_2触发的还是用户触发的），如果是主动的，上次主动触发large llm的queue_2里的那个消息就应该被复原push进去（第一次说话是AI主动的）。queue_2打断large llm（输入system prompt+large llm之前没说完的话和没来及说的话history_saying_be_interrupted+queue_2的消息）的时候，一定是large llm不忙的时候，否则就会等待。在打断large llm的同时，应当设置一个inputguardrails，如果发现用户说的话在捣乱或者用户说的话和任务没关系，那么直接触发护栏，利用输入护栏里的agent顺便输出一会说的话（这也可以流式输出）。large llm根据传入的信息决定是否调用send message to computer agent tool工具。
+你先把这个流程实现了，不用关注提示词如何写的是否完美，但提示词不能硬编码。
