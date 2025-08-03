@@ -1,0 +1,36 @@
+# Computer Tool - Browser-Use 框架依赖包
+
+# Browser-Use 核心框架
+browser-use>=0.5.0
+
+# Playwright 浏览器驱动 (Browser-Use依赖)
+playwright>=1.40.0
+
+# LLM集成
+openai>=1.0.0
+anthropic>=0.7.0
+
+# 环境变量管理
+python-dotenv>=1.0.0
+
+# 异步编程
+asyncio-mqtt>=0.11.0
+
+# 日志和工具
+logging-config>=1.0.0
+
+# 可选：语音功能支持
+speech-recognition>=3.10.0
+pyttsx3>=2.90
+
+# 可选：GUI支持
+PyQt5>=5.15.0
+
+# 开发和测试
+pytest>=7.0.0
+pytest-asyncio>=0.21.0
+
+# 注意事项：
+# 1. 需要Python 3.11+
+# 2. 安装完成后需要运行: playwright install chromium --with-deps --no-shell
+# 3. 需要设置相应的API密钥环境变量
