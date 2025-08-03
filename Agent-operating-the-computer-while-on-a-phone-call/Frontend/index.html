@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Airline Ticket Booking</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Use Inter as the default font */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Style for the success message page */
+        #success-page {
+            display: none; /* Hidden by default */
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <div id="booking-page" class="container mx-auto px-4 py-8">
+        <h1 class="text-4xl font-bold text-center text-gray-800 mb-10">机票预订表单</h1>
+
+        <!-- This is a container for all the booking forms -->
+        <div class="space-y-12">
+
+            <!-- Booking Form 1 -->
+            <div class="bg-white p-8 rounded-xl shadow-lg">
+                <h2 class="text-2xl font-semibold text-gray-700 mb-6 border-b pb-4">表单#1</h2>
+                <form class="booking-form" data-form-id="1">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Name Field -->
+                        <div>
+                            <label for="name1" class="block text-sm font-medium text-gray-700">姓名</label>
+                            <input type="text" id="name1" name="name" placeholder="例：周浩洋" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        </div>
+                        <!-- Age Field -->
+                        <div>
+                            <label for="age1" class="block text-sm font-medium text-gray-700">年龄</label>
+                            <input type="number" id="age1" name="age" placeholder="例：20" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        </div>
+                        <!-- ID Card Number Field -->
+                        <div>
+                            <label for="id_card1" class="block text-sm font-medium text-gray-700">身份证号码</label>
+                            <input type="text" id="id_card1" name="id_card" placeholder="例：114514191981066666" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        </div>
+                        <!-- Phone Number Field -->
+                        <div>
+                            <label for="phone1" class="block text-sm font-medium text-gray-700">联系方式</label>
+                            <input type="tel" id="phone1" name="phone" placeholder="例：11451466666" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        </div>
+                        <!-- Departure City Field -->
+                        <div>
+                            <label for="departure1" class="block text-sm font-medium text-gray-700">始发地</label>
+                            <input type="text" id="departure1" name="departure" placeholder="例：北京" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        </div>
+                        <!-- Destination City Field -->
+                        <div>
+                            <label for="destination1" class="block text-sm font-medium text-gray-700">目的地</label>
+                            <input type="text" id="destination1" name="destination" placeholder="例：上海" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        </div>
+                        <!-- Flight Number Field -->
+                        <div>
+                            <label for="flight_number1" class="block text-sm font-medium text-gray-700">航班号</label>
+                            <input type="text" id="flight_number1" name="flight_number" placeholder="例：CA1589" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        </div>
+                        <!-- Class Field -->
+                        <div>
+                            <label for="class1" class="block text-sm font-medium text-gray-700">座舱</label>
+                            <input type="text" id="class1" name="class" placeholder="例：商务舱" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        </div>
+                    </div>
+                    <!-- Submit Button -->
+                    <div class="flex justify-end pt-4">
+                        <button type="submit" class="book-button inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                            保存预订
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Booking Form 2 -->
+            <div class="bg-white p-8 rounded-xl shadow-lg">
+                <h2 class="text-2xl font-semibold text-gray-700 mb-6 border-b pb-4">表单#2</h2>
+                <form class="booking-form" data-form-id="2">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Fields are identical in structure to form 1, just with different IDs -->
+                        <div><label for="name2" class="block text-sm font-medium text-gray-700">姓名</label><input type="text" id="name2" name="name" placeholder="例：周浩洋" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></div>
+                        <div><label for="age2" class="block text-sm font-medium text-gray-700">年龄</label><input type="number" id="age2" name="age" placeholder="例：20" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></div>
+                        <div><label for="id_card2" class="block text-sm font-medium text-gray-700">身份证号码</label><input type="text" id="id_card2" name="id_card" placeholder="例：114514191981066666" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></div>
+                        <div><label for="phone2" class="block text-sm font-medium text-gray-700">联系方式</label><input type="tel" id="phone2" name="phone" placeholder="例：11451466666" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></div>
+                        <div><label for="departure2" class="block text-sm font-medium text-gray-700">始发地</label><input type="text" id="departure2" name="departure" placeholder="例：北京" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></div>
+                        <div><label for="destination2" class="block text-sm font-medium text-gray-700">目的地</label><input type="text" id="destination2" name="destination" placeholder="例：上海" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></div>
+                        <div><label for="flight_number2" class="block text-sm font-medium text-gray-700">航班号</label><input type="text" id="flight_number2" name="flight_number" placeholder="例：CA1589" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></div>
+                        <div><label for="class2" class="block text-sm font-medium text-gray-700">座舱</label><input type="text" id="class2" name="class" placeholder="例：商务舱" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></div>
+                    </div>
+                    <div class="flex justify-end pt-4"><button type="submit" class="book-button inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">保存预订</button></div>
+                </form>
+            </div>
+
+             <!-- Booking Form 3 -->
+            <div class="bg-white p-8 rounded-xl shadow-lg">
+                <h2 class="text-2xl font-semibold text-gray-700 mb-6 border-b pb-4">表单#3</h2>
+                <form class="booking-form" data-form-id="3">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Fields are identical in structure to form 1, just with different IDs -->
+                        <div><label for="name3" class="block text-sm font-medium text-gray-700">姓名</label><input type="text" id="name3" name="name" placeholder="例：周浩洋" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></div>
+                        <div><label for="age3" class="block text-sm font-medium text-gray-700">年龄</label><input type="number" id="age3" name="age" placeholder="例：20" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></div>
+                        <div><label for="id_card3" class="block text-sm font-medium text-gray-700">身份证号码</label><input type="text" id="id_card3" name="id_card" placeholder="例：114514191981066666" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></div>
+                        <div><label for="phone3" class="block text-sm font-medium text-gray-700">联系方式</label><input type="tel" id="phone3" name="phone" placeholder="例：11451466666" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></div>
+                        <div><label for="departure3" class="block text-sm font-medium text-gray-700">始发地</label><input type="text" id="departure3" name="departure" placeholder="例：北京" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></div>
+                        <div><label for="destination3" class="block text-sm font-medium text-gray-700">目的地</label><input type="text" id="destination3" name="destination" placeholder="例：上海" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></div>
+                        <div><label for="flight_number3" class="block text-sm font-medium text-gray-700">航班号</label><input type="text" id="flight_number3" name="flight_number" placeholder="例：CA1589" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></div>
+                        <div><label for="class3" class="block text-sm font-medium text-gray-700">座舱</label><input type="text" id="class3" name="class" placeholder="例：商务舱" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></div>
+                    </div>
+                    <div class="flex justify-end pt-4"><button type="submit" class="book-button inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">保存预订</button></div>
+                </form>
+            </div>
+
+             <!-- Booking Form 4 -->
+            <div class="bg-white p-8 rounded-xl shadow-lg">
+                <h2 class="text-2xl font-semibold text-gray-700 mb-6 border-b pb-4">表单#4</h2>
+                <form class="booking-form" data-form-id="4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Fields are identical in structure to form 1, just with different IDs -->
+                        <div><label for="name4" class="block text-sm font-medium text-gray-700">姓名</label><input type="text" id="name4" name="name" placeholder="例：周浩洋" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></div>
+                        <div><label for="age4" class="block text-sm font-medium text-gray-700">年龄</label><input type="number" id="age4" name="age" placeholder="例：20" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></div>
+                        <div><label for="id_card4" class="block text-sm font-medium text-gray-700">身份证号码</label><input type="text" id="id_card4" name="id_card" placeholder="例：114514191981066666" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></div>
+                        <div><label for="phone4" class="block text-sm font-medium text-gray-700">联系方式</label><input type="tel" id="phone4" name="phone" placeholder="例：11451466666" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></div>
+                        <div><label for="departure4" class="block text-sm font-medium text-gray-700">始发地</label><input type="text" id="departure4" name="departure" placeholder="例：北京" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></div>
+                        <div><label for="destination4" class="block text-sm font-medium text-gray-700">目的地</label><input type="text" id="destination4" name="destination" placeholder="例：上海" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></div>
+                        <div><label for="flight_number4" class="block text-sm font-medium text-gray-700">航班号</label><input type="text" id="flight_number4" name="flight_number" placeholder="例：CA1589" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></div>
+                        <div><label for="class4" class="block text-sm font-medium text-gray-700">座舱</label><input type="text" id="class4" name="class" placeholder="例：商务舱" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></div>
+                    </div>
+                    <div class="flex justify-end pt-4"><button type="submit" class="book-button inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">保存预订</button></div>
+                </form>
+            </div>
+
+             <!-- Booking Form 5 -->
+            <div class="bg-white p-8 rounded-xl shadow-lg">
+                <h2 class="text-2xl font-semibold text-gray-700 mb-6 border-b pb-4">表单#5</h2>
+                <form class="booking-form" data-form-id="5">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Fields are identical in structure to form 1, just with different IDs -->
+                        <div><label for="name5" class="block text-sm font-medium text-gray-700">姓名</label><input type="text" id="name5" name="name" placeholder="例：周浩洋" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></div>
+                        <div><label for="age5" class="block text-sm font-medium text-gray-700">年龄</label><input type="number" id="age5" name="age" placeholder="例：20" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></div>
+                        <div><label for="id_card5" class="block text-sm font-medium text-gray-700">身份证号码</label><input type="text" id="id_card5" name="id_card" placeholder="例：114514191981066666" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></div>
+                        <div><label for="phone5" class="block text-sm font-medium text-gray-700">联系方式</label><input type="tel" id="phone5" name="phone" placeholder="例：11451466666" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></div>
+                        <div><label for="departure5" class="block text-sm font-medium text-gray-700">始发地</label><input type="text" id="departure5" name="departure" placeholder="例：北京" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></div>
+                        <div><label for="destination5" class="block text-sm font-medium text-gray-700">目的地</label><input type="text" id="destination5" name="destination" placeholder="例：上海" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></div>
+                        <div><label for="flight_number5" class="block text-sm font-medium text-gray-700">航班号</label><input type="text" id="flight_number5" name="flight_number" placeholder="例：CA1589" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></div>
+                        <div><label for="class5" class="block text-sm font-medium text-gray-700">座舱</label><input type="text" id="class5" name="class" placeholder="例：商务舱" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></div>
+                    </div>
+                    <div class="flex justify-end pt-4"><button type="submit" class="book-button inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">保存预订</button></div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Message Page -->
+    <div id="success-page" class="container mx-auto px-4 py-8 text-center">
+        <div class="bg-white p-16 rounded-xl shadow-lg max-w-md mx-auto">
+            <div class="text-6xl text-green-500 mb-4">✓</div>
+            <h2 class="text-3xl font-bold text-gray-800 mb-4">保存成功</h2>
+            <p class="text-gray-600 mb-8">您的预订信息已经在本地保存</p>
+            <button id="return-button" class="inline-flex justify-center py-2 px-6 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                返回表单
+            </button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Get references to the two main page containers
+            const bookingPage = document.getElementById('booking-page');
+            const successPage = document.getElementById('success-page');
+            
+            // Get reference to the return button
+            const returnButton = document.getElementById('return-button');
+
+            // --- NEW FUNCTION: Load saved data from localStorage into the forms ---
+            const loadSavedData = () => {
+                const forms = document.querySelectorAll('.booking-form');
+                forms.forEach(form => {
+                    const formId = form.dataset.formId;
+                    const savedData = localStorage.getItem(`bookingData_${formId}`);
+
+                    if (savedData) {
+                        try {
+                            const bookingData = JSON.parse(savedData);
+                            // Loop through the saved data and populate form fields
+                            for (const key in bookingData) {
+                                if (Object.prototype.hasOwnProperty.call(bookingData, key)) {
+                                    const input = form.querySelector(`[name="${key}"]`);
+                                    if (input) {
+                                        input.value = bookingData[key];
+                                    }
+                                }
+                            }
+                            console.log(`Booking data for form ${formId} loaded from localStorage.`);
+                        } catch (error) {
+                            console.error(`Could not parse or load data for form ${formId}:`, error);
+                        }
+                    }
+                });
+            };
+
+            // Function to handle form submission
+            const handleFormSubmit = (event) => {
+                // Prevent the default form submission which reloads the page
+                event.preventDefault();
+                
+                const form = event.target;
+                const formId = form.dataset.formId;
+
+                // Use FormData to easily collect all form fields
+                const formData = new FormData(form);
+                
+                // Convert FormData to a plain object
+                const bookingData = {};
+                formData.forEach((value, key) => {
+                    bookingData[key] = value;
+                });
+
+                // Save the data to localStorage. We use JSON.stringify to store the object.
+                // Each form's data is saved with a unique key.
+                try {
+                    localStorage.setItem(`bookingData_${formId}`, JSON.stringify(bookingData));
+                    console.log(`Booking data for form ${formId} saved:`, bookingData);
+                } catch (error) {
+                    console.error("Could not save to localStorage:", error);
+                    // Optionally, show an error message to the user
+                }
+                
+                // Switch to the success page view
+                bookingPage.style.display = 'none';
+                successPage.style.display = 'block';
+            };
+
+            // Function to handle returning to the booking page
+            const handleReturn = () => {
+                successPage.style.display = 'none';
+                bookingPage.style.display = 'block';
+            };
+
+            // Add event listeners to all forms
+            const forms = document.querySelectorAll('.booking-form');
+            forms.forEach(form => {
+                form.addEventListener('submit', handleFormSubmit);
+            });
+
+            // Add event listener for the return button
+            returnButton.addEventListener('click', handleReturn);
+
+            // --- NEW: Load any saved data when the page loads ---
+            loadSavedData();
+        });
+    </script>
+
+</body>
+</html>

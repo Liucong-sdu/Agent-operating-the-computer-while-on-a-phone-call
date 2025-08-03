@@ -1,0 +1,6 @@
+openai
+pyaudio
+onnxruntime
+numpy
+python-dotenv
+langdetect
