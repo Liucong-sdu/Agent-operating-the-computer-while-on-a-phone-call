@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>机票预订系统</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            letter-spacing: -0.5px;
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .card-header {
+            background: linear-gradient(to right, #4b6cb7, #182848);
+            color: white;
+            padding: 25px 40px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .card-header i {
+            font-size: 2.5rem;
+            margin-right: 20px;
+        }
+        
+        .card-header h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+        
+        .form-container {
+            padding: 40px;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .form-group {
+            position: relative;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #2d3748;
+            font-size: 1.05rem;
+        }
+        
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            background: #f8fafc;
+        }
+        
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #4b6cb7;
+            box-shadow: 0 0 0 3px rgba(75, 108, 183, 0.2);
+            background: white;
+        }
+        
+        .form-group input::placeholder {
+            color: #a0aec0;
+        }
+        
+        .submit-btn {
+            background: linear-gradient(to right, #4b6cb7, #182848);
+            color: white;
+            border: none;
+            padding: 18px 45px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: block;
+            margin: 0 auto;
+            box-shadow: 0 4px 15px rgba(75, 108, 183, 0.3);
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(75, 108, 183, 0.4);
+        }
+        
+        .submit-btn:active {
+            transform: translateY(1px);
+        }
+        
+        .success-page {
+            display: none;
+            text-align: center;
+            padding: 80px 40px;
+        }
+        
+        .success-icon {
+            font-size: 8rem;
+            color: #10b981;
+            margin-bottom: 30px;
+            animation: bounce 1s ease;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-30px);}
+            60% {transform: translateY(-15px);}
+        }
+        
+        .success-page h2 {
+            font-size: 3rem;
+            color: #182848;
+            margin-bottom: 20px;
+        }
+        
+        .success-page p {
+            font-size: 1.3rem;
+            color: #4a5568;
+            max-width: 600px;
+            margin: 0 auto 40px;
+            line-height: 1.6;
+        }
+        
+        .flight-info {
+            background: #f1f5f9;
+            border-radius: 15px;
+            padding: 30px;
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: left;
+        }
+        
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .info-row:last-child {
+            border-bottom: none;
+        }
+        
+        .info-label {
+            font-weight: 600;
+            color: #4a5568;
+        }
+        
+        .info-value {
+            color: #2d3748;
+            font-weight: 500;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .header p {
+                font-size: 1rem;
+            }
+            
+            .card-header {
+                padding: 20px;
+            }
+            
+            .form-container {
+                padding: 30px 20px;
+            }
+            
+            .submit-btn {
+                width: 100%;
+            }
+            
+            .success-page {
+                padding: 40px 20px;
+            }
+            
+            .success-page h2 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-plane-departure"></i> 机票预订系统</h1>
+            <p>快速预订您的旅程，享受无忧出行体验</p>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-ticket-alt"></i>
+                <h2>乘客信息与航班详情</h2>
+            </div>
+            
+            <div class="form-container" id="booking-page">
+                <form id="booking-form">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="name"><i class="fas fa-user"></i> 姓名</label>
+                            <input type="text" id="name" name="name" placeholder="请输入您的全名" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="age"><i class="fas fa-birthday-cake"></i> 年龄</label>
+                            <input type="number" id="age" name="age" placeholder="请输入您的年龄" min="1" max="120" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="id_card"><i class="fas fa-id-card"></i> 身份证号码</label>
+                            <input type="text" id="id_card" name="id_card" placeholder="请输入18位身份证号码" pattern="\d{17}[\dX]" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone"><i class="fas fa-phone"></i> 联系方式</label>
+                            <input type="tel" id="phone" name="phone" placeholder="请输入手机号码" pattern="[0-9]{11}" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="departure"><i class="fas fa-map-marker-alt"></i> 始发地</label>
+                            <input type="text" id="departure" name="departure" placeholder="例如：北京首都国际机场" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="destination"><i class="fas fa-location-arrow"></i> 目的地</label>
+                            <input type="text" id="destination" name="destination" placeholder="例如：上海浦东国际机场" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="departure_date"><i class="far fa-calendar-alt"></i> 出发日期</label>
+                            <input type="date" id="departure_date" name="departure_date" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="flight_number"><i class="fas fa-plane"></i> 航班号</label>
+                            <input type="text" id="flight_number" name="flight_number" placeholder="例如：CA1501" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="class"><i class="fas fa-chair"></i> 舱位等级</label>
+                            <select id="class" name="class" required>
+                                <option value="">请选择舱位等级</option>
+                                <option value="economy">经济舱</option>
+                                <option value="premium">超级经济舱</option>
+                                <option value="business">商务舱</option>
+                                <option value="first">头等舱</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="passengers"><i class="fas fa-users"></i> 乘客数量</label>
+                            <select id="passengers" name="passengers" required>
+                                <option value="1">1 位乘客</option>
+                                <option value="2">2 位乘客</option>
+                                <option value="3">3 位乘客</option>
+                                <option value="4">4 位乘客</option>
+                                <option value="5">5 位乘客</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-paper-plane"></i> 提交预订信息
+                    </button>
+                </form>
+            </div>
+        </div>
+        
+        <div class="card" id="success-page">
+            <div class="success-page">
+                <div class="success-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h2>预订成功!</h2>
+                <p>您的机票预订信息已成功保存，稍后我们会将电子机票发送至您的邮箱。</p>
+                
+                <div class="flight-info" id="flight-details">
+                    <!-- Flight details will be inserted here by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const bookingForm = document.getElementById('booking-form');
+            const bookingPage = document.querySelector('.form-container');
+            const successPage = document.getElementById('success-page');
+            const flightDetails = document.getElementById('flight-details');
+            
+            // Set default departure date to tomorrow
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            document.getElementById('departure_date').valueAsDate = tomorrow;
+            
+            // Handle form submission
+            bookingForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+                
+                // Get form data
+                const formData = {
+                    name: document.getElementById('name').value,
+                    age: document.getElementById('age').value,
+                    id_card: document.getElementById('id_card').value,
+                    phone: document.getElementById('phone').value,
+                    departure: document.getElementById('departure').value,
+                    destination: document.getElementById('destination').value,
+                    departure_date: formatDate(document.getElementById('departure_date').value),
+                    flight_number: document.getElementById('flight_number').value,
+                    class: document.getElementById('class').value,
+                    passengers: document.getElementById('passengers').value
+                };
+                
+                // Save to localStorage
+                localStorage.setItem('flightBooking', JSON.stringify(formData));
+                
+                // Generate flight details HTML
+                const flightHTML = `
+                    <div class="info-row">
+                        <span class="info-label">乘客姓名:</span>
+                        <span class="info-value">${formData.name}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">航班号:</span>
+                        <span class="info-value">${formData.flight_number}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">行程:</span>
+                        <span class="info-value">${formData.departure} → ${formData.destination}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">出发日期:</span>
+                        <span class="info-value">${formData.departure_date}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">舱位等级:</span>
+                        <span class="info-value">${getClassText(formData.class)}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">乘客数量:</span>
+                        <span class="info-value">${formData.passengers} 位</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">预订时间:</span>
+                        <span class="info-value">${new Date().toLocaleString()}</span>
+                    </div>
+                `;
+                
+                flightDetails.innerHTML = flightHTML;
+                
+                // Show success page
+                bookingPage.closest('.card').style.display = 'none';
+                successPage.style.display = 'block';
+            });
+            
+            // Helper function to format date
+            function formatDate(dateString) {
+                const options = { year: 'numeric', month: 'long', day: 'numeric' };
+                return new Date(dateString).toLocaleDateString('zh-CN', options);
+            }
+            
+            // Helper function to get class text
+            function getClassText(classValue) {
+                const classes = {
+                    'economy': '经济舱',
+                    'premium': '超级经济舱',
+                    'business': '商务舱',
+                    'first': '头等舱'
+                };
+                return classes[classValue] || classValue;
+            }
+            
+            // Try to load saved data
+            const savedData = localStorage.getItem('flightBooking');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                document.getElementById('name').value = data.name || '';
+                document.getElementById('age').value = data.age || '';
+                document.getElementById('id_card').value = data.id_card || '';
+                document.getElementById('phone').value = data.phone || '';
+                document.getElementById('departure').value = data.departure || '';
+                document.getElementById('destination').value = data.destination || '';
+                document.getElementById('flight_number').value = data.flight_number || '';
+                
+                if (data.departure_date) {
+                    document.getElementById('departure_date').value = new Date(data.departure_date).toISOString().split('T')[0];
+                }
+                
+                if (data.class) {
+                    document.getElementById('class').value = data.class;
+                }
+                
+                if (data.passengers) {
+                    document.getElementById('passengers').value = data.passengers;
+                }
+            }
+        });
+    </script>
+</body>
+</html>
